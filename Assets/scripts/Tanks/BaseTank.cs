@@ -10,10 +10,7 @@ class BaseTank : MonoBehaviour
 
     public Sprite[] sprites;
 
-
     protected Sprite sprite;
-    [SerializeField]
-    private float m_speed;
     protected float Speed { get => m_speed; private set => m_speed = value; }
 
     protected Vector3 targetPosition;
@@ -25,15 +22,30 @@ class BaseTank : MonoBehaviour
     protected float step;
 
 
-    public void SetSpeed(float speed)
+    [SerializeField]
+    private float m_speed;
+    [SerializeField]
+    float thrust = 300.0f;
+    GameObject prefabBullet;
+    Bullet m_bullet;
+
+
+    protected virtual void Init()
     {
-        Speed = speed;
+        prefabBullet = Resources.Load<GameObject>("Prefabs/bullet");
+        sprite = GetComponent<SpriteRenderer>().sprite;
+        rb2D = GetComponent<Rigidbody2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
+
+        targetPosition = transform.position;
+        //gc.BulletStartRun_Event += Fire;
+
     }
 
-    public void SetTankType(en_TankType type)
-    {
-        tankType = type;
-    }
+
+    public void SetSpeed(float speed) => Speed = speed;
+
+    public void SetTankType(en_TankType type) => tankType = type;
 
     private double Katet(float sideA, float sideB)
     {
@@ -58,17 +70,15 @@ class BaseTank : MonoBehaviour
 
         if (isLevelArea)
         {
-
-            Debug.DrawRay(rayOrigin.position, target, Color.green, 1f);
+            //Debug.DrawRay(rayOrigin.position, target, Color.green, 1f);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin.position, target, blockSize);
 
-
-
             Vector2 targetR = target + new Vector2(0.06f * direction.y, 0.06f * direction.x);
-            Vector2 targetL = target - new Vector2(0.06f * direction.y, 0.06f * direction.x);
             //Debug.DrawRay(rayOrigin.position, targetR, Color.red, 1f);
-            //Debug.DrawRay(rayOrigin.position, targetL, Color.yellow, 1f);
             RaycastHit2D hitR = Physics2D.Raycast(rayOrigin.position, targetR, (float)Katet(blockSize, boxCollider2D.size.x / 2));
+
+            Vector2 targetL = target - new Vector2(0.06f * direction.y, 0.06f * direction.x);
+            //Debug.DrawRay(rayOrigin.position, targetL, Color.yellow, 1f);
             RaycastHit2D hitL = Physics2D.Raycast(rayOrigin.position, targetL, (float)Katet(blockSize, boxCollider2D.size.x / 2));
 
             isCanMoving = (hit.collider || hitR.collider || hitL.collider) ? false : true;
@@ -80,12 +90,14 @@ class BaseTank : MonoBehaviour
             //    if (hitR.collider) Debug.Log($"c:{hitR.collider.name}");
             //    if (hitL.collider) Debug.Log($"c:{hitL.collider.name}");
             //}
+
             return isCanMoving;
         }
         return isLevelArea;
     }
 
 
+    #region TANK Movement 
 
     public void MoveForward(float blockSize, int levelWidth, int levelHeight)
     {
@@ -137,14 +149,31 @@ class BaseTank : MonoBehaviour
         if (tmp_) targetPosition = tmp_targetPoint;
         //else Debug.Log("cant move to Left");
     }
+    #endregion
 
-    protected virtual void Init()
+
+    void Fire()
     {
-        targetPosition = transform.position;
-        sprite = GetComponent<SpriteRenderer>().sprite;
-        rb2D = GetComponent<Rigidbody2D>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
+        float y = (float) LevelManager.Instance.ActiveLevel.GraphicBlockSize.x / 2 / 100;
+
+        Vector3 direction = rayOrigin.position - transform.position;
+
+        Vector3 initPosition = rayOrigin.position + direction.normalized * y;
+        //Debug.Log($"offsetVector3 normalized >>> {direction.normalized.ToString("F5")}");
+
+        Quaternion initQuaternion = transform.rotation;
+
+        GameObject go = prefabBullet;
+
+        m_bullet = go.GetComponent<Bullet>();
+
+        go = Instantiate(m_bullet.gameObject, initPosition, initQuaternion, rayOrigin);
+
+        go.GetComponent<Rigidbody2D>().AddForce(direction * thrust);
 
     }
 
+
+
 }
+

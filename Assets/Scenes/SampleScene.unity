@@ -131,11 +131,11 @@ GameObject:
   m_Component:
   - component: {fileID: 36779056}
   m_Layer: 0
-  m_Name: wrapperLevel
+  m_Name: LevelBlocks_wrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &36779056
 Transform:
@@ -373,7 +373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5234b4dbdb44bf4789da490f4d08852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LEVEL_NUM: 1
   wrapperLevel: {fileID: 36779055}
 --- !u!4 &1213706274
 Transform:
@@ -418,7 +417,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09899b8b30370a54c8ce6ac64b9d1ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelManager: {fileID: 1213706273}
 --- !u!4 &1405526476
 Transform:
   m_ObjectHideFlags: 0

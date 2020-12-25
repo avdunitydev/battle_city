@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2510137033802690090}
   m_Layer: 0
   m_Name: enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ce5d7bbaf807a4a8465678779b7779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isCanM: 0
   sprites: []
+  prefabBullet: {fileID: 0}
+  m_speed: 0
+  rayOrigin: {fileID: 0}
 --- !u!61 &4600780857619736511
 BoxCollider2D:
   m_ObjectHideFlags: 0

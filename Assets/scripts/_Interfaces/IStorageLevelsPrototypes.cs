@@ -1,4 +1,4 @@
 ﻿interface IStorageLevelsPrototypes
 {
-    char[,] GetLevelPrototype(int id);
+    Level GetLevelPrototype(int id);
 }

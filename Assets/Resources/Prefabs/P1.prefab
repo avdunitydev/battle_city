@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 5291246569861960008}
   - component: {fileID: 1521393637}
   - component: {fileID: 6489040624387350747}
+  - component: {fileID: 6294224042942243986}
   m_Layer: 0
   m_Name: P1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,8 +135,9 @@ MonoBehaviour:
   sprites:
   - {fileID: 6128299156075563123, guid: 15bbd7c383de73c47bb0941f3eeb3586, type: 3}
   - {fileID: 3386662938922423588, guid: 15bbd7c383de73c47bb0941f3eeb3586, type: 3}
-  m_speed: 1
   rayOrigin: {fileID: 4305061935926911265}
+  m_speed: 1
+  thrust: 300
 --- !u!61 &5291246569861960008
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -279,6 +281,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6294224042942243986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444308298632866798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b7b7178f16a80a41b40dc6e18d7f14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6444308298750652639
 GameObject:
   m_ObjectHideFlags: 0

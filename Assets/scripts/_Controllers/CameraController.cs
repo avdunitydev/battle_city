@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    GameController gameController;
     Transform camPosition;
     Camera mainCam;
 
@@ -11,7 +10,6 @@ public class CameraController : MonoBehaviour
     {
         mainCam = GetComponent<Camera>();
         camPosition = GetComponent<Transform>();
-        gameController = GameController.instance;
     }
 
     private void SetCamPosition()
@@ -19,12 +17,12 @@ public class CameraController : MonoBehaviour
         const int pixelInOne_UNIT = 100;
         const float SCREEN_BORDER_SIZE = 0.4f;
 
-        Level tLevel = gameController.levelManager.ActiveLevel;
+        Level activeLevel = LevelManager.Instance.ActiveLevel;
 
-        int blockSize_Y = tLevel.graphicBlockSize.y;
-        int blockSize_X = tLevel.graphicBlockSize.x;
+        int blockSize_Y = activeLevel.GraphicBlockSize.y;
+        int blockSize_X = activeLevel.GraphicBlockSize.x;
 
-        float levelPixelHeight = (float)blockSize_Y * (float)tLevel.LevelPrototype.GetLength(0);
+        float levelPixelHeight = (float)blockSize_Y * (float)activeLevel.LevelPrototype.GetLength(0);
         //float levelPixelWidth = (float)blockSize_X * (float)tLevel.LevelPrototype.GetLength(1);
 
         float x = (levelPixelHeight / pixelInOne_UNIT + SCREEN_BORDER_SIZE * 2) / 2;

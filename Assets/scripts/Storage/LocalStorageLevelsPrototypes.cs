@@ -1,6 +1,8 @@
-﻿class LocalStorageLevelsPrototypes : IStorageLevelsPrototypes
+﻿using System;
+
+class LocalStorageLevelsPrototypes : IStorageLevelsPrototypes
 {
-    protected object[] Levels { get; private set; } = new object[2];
+    Level level_1, level_2;
 
     char[,] ProrotypeLevel_1 = {
         {'s','.','.','.','.','.','.','.','.','.','.','.','s','.','.','.','.','.','.','.','.','.','.','.','s','.'},
@@ -10,8 +12,8 @@
         {'.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.'},
         {'.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.'},
         {'.','.','#','#','.','.','#','#','.','.','#','#','@','@','#','#','.','.','#','#','.','.','#','#','.','.'},
-        {'.','.','#','#','.','.','#','#','.','.','#','#','@','@','#','#','.','.','#','#','.','.','#','#','.','.'},
-        {'.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.'},
+        {'.','.','#','#','.','.','~','~','.','.','#','#','@','@','#','#','.','.','#','#','.','.','#','#','.','.'},
+        {'.','.','#','#','.','.','~','~','.','.','#','#','.','.','#','#','.','.','#','#','.','.','#','#','.','.'},
         {'.','.','#','#','.','.','#','#','.','.','.','.','.','.','.','.','.','.','#','#','.','.','#','#','.','.'},
         {'.','.','#','#','.','.','#','#','.','.','.','.','.','.','.','.','.','.','#','#','.','.','#','#','.','.'},
         {'.','.','.','.','.','.','.','.','.','.','#','#','.','.','#','#','.','.','.','.','.','.','.','.','.','.'},
@@ -61,11 +63,47 @@
     };
 
 
-    public char[,] GetLevelPrototype(int id)
+    internal LocalStorageLevelsPrototypes()
     {
-        Levels[0] = ProrotypeLevel_1;
-        Levels[1] = ProrotypeLevel_2;
+        level_1 = new Level(ProrotypeLevel_1);
+        level_1.SetEnemy(GetEnemy(1));
 
-        return (char[,])Levels[id];
+        level_2 = new Level(ProrotypeLevel_2);
+
+
     }
+
+    private EnemyTank[] GetEnemy(int level)
+    {
+        int colst = 20;
+        EnemyTank[] tmpEnemies = new EnemyTank[colst];
+
+        int n = new Random().Next(level);
+        n += 20;
+
+        for (int i = 0; i < colst; ++i)
+        {
+            tmpEnemies[i] = new EnemyTank();
+            tmpEnemies[i].SetTankType(en_TankType.Enemy_1);            
+        }
+
+
+        return tmpEnemies;
+    }
+
+    public Level GetLevelPrototype(int id)
+    {
+        switch (id)
+        {
+            case 1:
+                return level_1;
+            case 2:
+                return level_2;
+            default:
+                return level_1;
+        }
+
+    }
+
+
 }

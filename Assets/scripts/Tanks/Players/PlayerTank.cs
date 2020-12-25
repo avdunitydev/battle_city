@@ -4,6 +4,7 @@ using UnityEngine;
 class PlayerTank : BaseTank
 {
     AudioSource audioMoving;
+    public bool FirstPlayer { get; private set; } = false;
 
 
     protected override void Init()
@@ -12,7 +13,7 @@ class PlayerTank : BaseTank
         audioMoving = GetComponent<AudioSource>();
     }
 
-
+    public void SetFirst(bool isFirst) => FirstPlayer = isFirst;
 
     private void Start()
     {
